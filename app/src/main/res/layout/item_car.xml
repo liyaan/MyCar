@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/carLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:padding="5dp"
+    android:background="@drawable/shape_edit_bg"
+    android:orientation="vertical">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
+        android:scaleType="matrix"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        android:id="@+id/itemCarImg"/>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/itemCarImg"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/Item_Car_Layout">
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Item_Car_Layout_Title"
+                android:text="车        型:"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/itemCarModel"
+                style="@style/Item_Car_Layout_Content"
+                android:text="车    型"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="18sp"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/Item_Car_Layout">
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Item_Car_Layout_Title"
+                android:text="上牌时间:"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/itemCarTime"
+                style="@style/Item_Car_Layout_Content"
+                android:text="车  型"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/Item_Car_Layout">
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Item_Car_Layout_Title"
+                android:text="车辆配置:"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/itemCarConfig"
+                style="@style/Item_Car_Layout_Content"
+                android:textColor="@color/colorAccent"
+                android:text="车  型"
+                android:textSize="18sp"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/Item_Car_Layout">
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Item_Car_Layout_Title"
+                android:text="保        险:"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/itemCarPro"
+                style="@style/Item_Car_Layout_Content"
+                android:textColor="@color/red"
+                android:text="车  型"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textSize="18sp"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/Item_Car_Layout">
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Item_Car_Layout_Title"
+                android:text="价        格:"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/itemCarPrice"
+                style="@style/Item_Car_Layout_Content"
+                android:textColor="@color/red"
+                android:text="车  型"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textSize="18sp"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</RelativeLayout>

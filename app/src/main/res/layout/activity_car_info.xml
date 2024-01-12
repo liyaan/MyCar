@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include layout="@layout/include_title_layout"
+        android:id="@+id/include"></include>
+    <include layout="@layout/item_car"
+        android:id="@+id/itemCar"></include>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:background="@drawable/shape_edit_bg"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/Item_Car_Layout">
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Item_Car_Layout_Title"
+                android:text="地        址:"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/itemCarAddress"
+                style="@style/Item_Car_Layout_Content"
+                android:textColor="@color/teal_700"
+                android:text="车  型"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textSize="18sp"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/Item_Car_Layout">
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Item_Car_Layout_Title"
+                android:text="其他信息:"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/itemCarOther"
+                style="@style/Item_Car_Layout_Content"
+                android:textColor="@color/teal_700"
+                android:text="车  型"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textSize="18sp"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <GridView
+        android:id="@+id/mInfoCarGridView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="2"/>
+</androidx.appcompat.widget.LinearLayoutCompat>

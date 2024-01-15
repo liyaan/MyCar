@@ -1,5 +1,6 @@
 package com.liyaan.car
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.lifecycleScope
@@ -21,6 +22,9 @@ class CarInfoActivity:BaseActivity() {
     private var list:MutableList<String> = ArrayList()
     private var clickNum:Int = 0
     private var carModelBean:CarInfo? = null
+    private val id:Int by lazy {
+        intent.getIntExtra("id",-1)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCarInfoBinding.inflate(layoutInflater)
@@ -31,13 +35,9 @@ class CarInfoActivity:BaseActivity() {
         binding!!.include.titleRight.visibility = View.VISIBLE
         binding!!.include.titleRight.setText("分享")
         binding!!.include.titleRight.setOnClickListener {
-            if(clickNum==1){
-                shareString()
-                return@setOnClickListener
-            }
-            if (list.size>0){
+            if (mAdapter!!.checkData.size>0){
                 clickNum = 1
-                ShareUtils.shareWechatFriend(this, list[0])
+                ShareUtils.shareWechatFriend(this, mAdapter!!.checkData[0])
             }else{
                 shareString()
             }
@@ -46,11 +46,32 @@ class CarInfoActivity:BaseActivity() {
         mAdapter = MyInfoPhotoAdapter(this@CarInfoActivity,list)
         binding!!.mInfoCarGridView.adapter = mAdapter
         initData()
+        binding!!.mCarInfoDel.setOnClickListener {
+            lifecycleScope.launch(Dispatchers.IO) {
+                if (carModelBean!=null){
+                    CarBase.getDatabase(this@CarInfoActivity).userDao().deleteByNum(carModelBean!!.id)
+                    val intent = Intent(this@CarInfoActivity, MainActivity::class.java)
+                    intent.putExtra("typeSign",1)
+                    startActivity(intent)
+                    finish()
+                }
 
+            }
+        }
+        binding!!.mCarInfoEdit.setOnClickListener {
+            if (id!=-1){
+                val intent = Intent(this,AddActivity::class.java)
+                intent.putExtra("typeSign",1)
+                intent.putExtra("id",id)
+                startActivity(intent)
+                finish()
+            }
+
+        }
     }
 
     private fun  initData(){
-        val id = intent.getIntExtra("id",-1)
+
         if (id!=-1){
             lifecycleScope.launch(Dispatchers.IO) {
                 carModelBean = CarBase.getDatabase(this@CarInfoActivity).userDao().getCarInfo(id)

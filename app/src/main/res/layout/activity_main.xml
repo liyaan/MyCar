@@ -29,15 +29,19 @@
             android:layout_marginBottom="5dip"
             android:orientation="horizontal">
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/Main_Search"
-                android:hint="日期搜索"/>
-            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/mSearchCarModel"
                 style="@style/Main_Search"
                 android:hint="车型搜索"/>
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/mSearchDateTime"
+                style="@style/Main_Search"
+                android:hint="日期搜索"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/mSearchPrice"
                 style="@style/Main_Search"
                 android:hint="价格搜索"/>
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/mSearchConfig"
                 style="@style/Main_Search"
                 android:hint="配置搜索"/>
         </androidx.appcompat.widget.LinearLayoutCompat>

@@ -2,6 +2,7 @@ package com.liyaan.car
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.liyaan.car.abs.BaseActivity
@@ -34,8 +35,29 @@ class MainActivity : BaseActivity() {
 //        }
         mAdapter = MyAdapter(list!!,this@MainActivity)
         binding!!.mCarListView.adapter = mAdapter
+        //日期搜索
+        binding!!.mSearchDateTime.setOnClickListener {
+            gotoSearchActivity(1)
+        }
+        //车型搜索
+        binding!!.mSearchCarModel.setOnClickListener {
+            gotoSearchActivity(2)
+        }
+        //价格搜索
+        binding!!.mSearchPrice.setOnClickListener {
+            gotoSearchActivity(3)
+        }
+        //配置搜索
+        binding!!.mSearchConfig.setOnClickListener {
+            gotoSearchActivity(4)
+        }
 
+    }
 
+    private fun gotoSearchActivity(type: Int) {
+        val intent = Intent(this,SearchActivity::class.java)
+        intent.putExtra("type",type)
+        startActivity(intent)
     }
 
     private fun initData(){
@@ -68,11 +90,22 @@ class MainActivity : BaseActivity() {
 //            "全保险","1.2",imgs,""))
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        val typeSign = intent?.getIntExtra("typeSign",0)
+        if (typeSign==1){
+            initData()
+        }
+    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (data!=null){
             if (requestCode == 0x12){
                 initData()
+            }else{
+                if (resultCode==0x13){
+                    initData()
+                }
             }
         }
     }

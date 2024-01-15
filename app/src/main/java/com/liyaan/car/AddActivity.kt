@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.liyaan.car.abs.BaseActivity
 import com.liyaan.car.adapter.MyPhotoAdapter
 import com.liyaan.car.dao.CarBase
@@ -24,6 +25,13 @@ class AddActivity: BaseActivity() {
     private var mPhotoAdapter:MyPhotoAdapter? = null
     private val listImage:MutableList<String>? = ArrayList()
     var path: String? = null
+    private val typeSign:Int by lazy {
+        intent.getIntExtra("typeSign",-1)
+    }
+    private val id:Int by lazy {
+        intent.getIntExtra("id",-1)
+    }
+    private var carModelBean:CarInfo? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddBinding.inflate(layoutInflater)
@@ -57,6 +65,36 @@ class AddActivity: BaseActivity() {
                 it.notifyDataSetChanged()
             }
         }
+
+        if (typeSign==1){
+            if (id!=-1){
+                initData()
+            }
+        }
+    }
+
+    private fun initData() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            carModelBean = CarBase.getDatabase(this@AddActivity).userDao().getCarInfo(id)
+            launch(Dispatchers.Main) {
+                binding?.apply {
+                    mCarModel.setText(carModelBean!!.carModel)
+                    mCarTime.setText(carModelBean!!.carTime)
+                    mCarConfig.setText(carModelBean!!.carConfig)
+                    mCarPro.setText(carModelBean!!.carPro)
+                    mCarPrice.setText(carModelBean!!.carPrice)
+                    mCarAddress.setText(carModelBean!!.carAddress)
+//                    carImg = if(listImage!!.size>0) Gson().toJson(listImage) else "",
+                    mCarOther.setText(carModelBean!!.carOther)
+                    if (carModelBean!!.carImg.isNotEmpty()){
+                        val type = object: TypeToken<MutableList<String>>(){}.type
+                        listImage?.addAll(Gson().fromJson(carModelBean!!.carImg,type))
+                        mPhotoAdapter?.notifyDataSetChanged()
+                    }
+                }
+            }
+        }
+
     }
 
     //拍照 选图回调
@@ -90,22 +128,47 @@ class AddActivity: BaseActivity() {
     }
     private fun addInfo(){
         lifecycleScope.launch(Dispatchers.IO) {
-            CarBase.getDatabase(this@AddActivity).userDao().insert(
-                CarInfo(
-                    carModel = binding!!.mCarModel.text.toString().trim(),
-                    carTime = binding!!.mCarTime.text.toString().trim(),
-                    carConfig = binding!!.mCarConfig.text.toString().trim(),
-                    carPro = binding!!.mCarPro.text.toString().trim(),
-                    carPrice = binding!!.mCarPrice.text.toString().trim(),
-                    carAddress = binding!!.mCarAddress.text.toString().trim(),
-                    carImg = if(listImage!!.size>0) Gson().toJson(listImage) else "",
-                    carOther = binding!!.mCarOther.text.toString().trim(),
-                    dataTime = "${System.currentTimeMillis()}"
+            if (typeSign!=1){
+                CarBase.getDatabase(this@AddActivity).userDao().insert(
+                    CarInfo(
+                        carModel = binding!!.mCarModel.text.toString().trim(),
+                        carTime = binding!!.mCarTime.text.toString().trim(),
+                        carConfig = binding!!.mCarConfig.text.toString().trim(),
+                        carPro = binding!!.mCarPro.text.toString().trim(),
+                        carPrice = binding!!.mCarPrice.text.toString().trim(),
+                        carAddress = binding!!.mCarAddress.text.toString().trim(),
+                        carImg = if(listImage!!.size>0) Gson().toJson(listImage) else "",
+                        carOther = binding!!.mCarOther.text.toString().trim(),
+                        dataTime = "${System.currentTimeMillis()}"
+                    )
                 )
-            )
-            val intent = Intent(this@AddActivity, MainActivity::class.java)
-            setResult(0x13,intent)
-            finish()
+                launch {
+                    val intent = Intent(this@AddActivity, MainActivity::class.java)
+                    setResult(0x13,intent)
+                    finish()
+                }
+            }else{
+                if (typeSign==1){
+                    CarBase.getDatabase(this@AddActivity).userDao().updateCarInfo(id,
+                         binding!!.mCarModel.text.toString().trim(),
+                         binding!!.mCarTime.text.toString().trim(),
+                          binding!!.mCarConfig.text.toString().trim(),
+                          binding!!.mCarPro.text.toString().trim(),
+                          binding!!.mCarPrice.text.toString().trim(),
+                           binding!!.mCarAddress.text.toString().trim(),
+                          if(listImage!!.size>0) Gson().toJson(listImage) else "",
+                           binding!!.mCarOther.text.toString().trim(),
+
+                    )
+                    launch {
+                        val intent = Intent(this@AddActivity, MainActivity::class.java)
+                        intent.putExtra("typeSign",typeSign)
+                        startActivity(intent)
+                        finish()
+                    }
+                }
+            }
+
         }
     }
 }

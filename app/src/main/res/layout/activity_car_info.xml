@@ -10,7 +10,8 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dip"
+        android:layout_weight="1"
         android:layout_margin="5dp"
         android:padding="5dp"
         android:background="@drawable/shape_edit_bg"
@@ -43,11 +44,29 @@
                 android:ellipsize="end"
                 android:textSize="18sp"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
+        <GridView
+            android:id="@+id/mInfoCarGridView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="2"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_margin="5dp"
+        android:orientation="horizontal">
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/mCarInfoDel"
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="删 除"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/mCarInfoEdit"
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="修 改"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <GridView
-        android:id="@+id/mInfoCarGridView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:numColumns="2"/>
 </androidx.appcompat.widget.LinearLayoutCompat>
